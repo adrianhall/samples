@@ -6,7 +6,9 @@ var builder = DistributedApplication.CreateBuilder(args);
 // Database Services
 // =================================================================
 
-var databaseService = builder.AddPostgres("postgres");
+var databaseService = builder.AddPostgres("postgres")
+    .PublishAsAzurePostgresFlexibleServer();
+
 if (builder.Environment.IsDevelopment())
 {
     databaseService.WithPgWeb();
