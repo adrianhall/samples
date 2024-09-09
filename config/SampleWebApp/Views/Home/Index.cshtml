@@ -1,0 +1,12 @@
+﻿@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Configuration</h1>
+</div>
+<section id="configSection">
+    <pre>@Html.Raw(((IConfigurationRoot)Configuration).GetDebugView())</pre>
+</section>
