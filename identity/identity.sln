@@ -5,7 +5,7 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Samples.Identity", "Samples.Identity\Samples.Identity.csproj", "{DA5E07EF-9EFC-4916-B2D7-6A3198F7F405}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Samples.AppHost", "Samples.AppHost\Samples.AppHost.csproj", "{4F46958F-2159-4CD9-A04D-FECF81906F71}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Samples.AppHost", "Samples.AppHost\Samples.AppHost.csproj", "{4F46958F-2159-4CD9-A04D-FECF81906F71}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Samples.ServiceDefaults", "Samples.ServiceDefaults\Samples.ServiceDefaults.csproj", "{A1976620-1027-4733-A931-16B691A505BB}"
 EndProject

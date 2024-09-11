@@ -1,4 +1,5 @@
 ﻿@{
+    string title = ViewBag.Title ?? ViewData["Title"] ?? string.Empty;
     string bodyClass = ViewBag.BodyClass ?? "layout--base";
 }
 <!DOCTYPE html>
@@ -6,20 +7,18 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Samples.Identity</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <title>IdentityService: @title</title>
+    <link rel="stylesheet" href="~/css/styles.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap-icons/font/bootstrap-icons.min.css" />
     @RenderSection("StyleSheets", required: false)
 </head>
 <body class="@bodyClass">
     @RenderBody()
 
     <div id="scripts">
-
+        <script src="~/lib/jquery/jquery.slim.min.js"></script>
+        <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+        @RenderSection("Scripts", required: false)
     </div>
-
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

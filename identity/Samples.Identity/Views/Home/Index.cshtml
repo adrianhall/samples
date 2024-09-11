@@ -1,8 +1,23 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    Layout = "_HomeLayout";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<header class="masthead">
+    <div class="container px-5">
+        <div class="row gx-5 align-items-center">
+            <div class="col-lg-6">
+                <div class="mb-5 mb-lg-0 text-center text-lg-start">
+                    <h1 class="display-1 lh-1 mb-3">Sample Identity Service.</h1>
+                    <p class="lead fw-normal text-muted mb-5">Check out the implementation code!</p>
+                    <div class="d-flex flex-column flex-lg-row align-items-center">
+                        <a href="https://github.com/adrianhall/samples" class="btn btn-lg btn-primary">Github Repository</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+            </div>
+        </div>
+    </div>
+</header>
+
