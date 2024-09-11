@@ -5,7 +5,7 @@ namespace Samples.Identity.Data;
 public class ApplicationDbInitializer(
     ApplicationDbContext context,
     IWebHostEnvironment env,
-    UserManager<IdentityUser> userManager,
+    UserManager<ApplicationUser> userManager,
     RoleManager<IdentityRole> roleManager
     ) : IDbInitializer
 {
@@ -38,10 +38,10 @@ public class ApplicationDbInitializer(
     {
         List<string> rolesToSeed = ["admin", "author"];
         List<SeedUser> usersToSeed = [
-            new SeedUser("alice", Roles: ["admin"]),
-            new SeedUser("bob", Roles: ["author"]),
-            new SeedUser("jack"),
-            new SeedUser("jill")
+            new SeedUser("claire", "Claire Redfield", Roles: ["admin"]),
+            new SeedUser("ada", "Ada Wong", Roles: ["author"]),
+            new SeedUser("luther", "Luther West"),
+            new SeedUser("jill", "Jill Valentine")
         ];
 
         foreach (string roleName in rolesToSeed)
@@ -85,18 +85,19 @@ public class ApplicationDbInitializer(
     /// <returns>A task that resolves when the operation is complete.</returns>
     internal async Task EnsureUserExistsAsync(SeedUser userRecord)
     {
-        IdentityUser? user = await userManager.FindByNameAsync(userRecord.UserName);
+        ApplicationUser? user = await userManager.FindByNameAsync(userRecord.UserName);
         if (user is not null)
         {
             return;
         }
 
-        IdentityUser newUser = new()
+        ApplicationUser newUser = new()
         {
             Id = Guid.NewGuid().ToString(),
             Email = $"{userRecord.UserName.ToLowerInvariant()}@contoso-email.com",
             EmailConfirmed = true,
-            UserName = userRecord.UserName
+            UserName = userRecord.UserName,
+            DisplayName = userRecord.DisplayName
         };
         IdentityResult? result = await userManager.CreateAsync(newUser, defaultPassword);
         ThrowIfNotSuccessful(result, $"Could not create user '{userRecord.UserName}'");
@@ -109,7 +110,7 @@ public class ApplicationDbInitializer(
     /// <returns>A task that resolves when the operation is complete.</returns>
     internal async Task EnsureUserIsInRolesAsync(SeedUser userRecord)
     {
-        IdentityUser? user = await userManager.FindByNameAsync(userRecord.UserName);
+        ApplicationUser? user = await userManager.FindByNameAsync(userRecord.UserName);
         if (user is null)
         {
             throw new ApplicationException($"User '{userRecord.UserName}' does not exist.");
@@ -145,5 +146,5 @@ public class ApplicationDbInitializer(
         }
     }
 
-    internal record SeedUser(string UserName, List<string>? Roles = null);
+    internal record SeedUser(string UserName, string DisplayName, List<string>? Roles = null);
 }

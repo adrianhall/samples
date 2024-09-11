@@ -31,7 +31,7 @@ public static class StartupExtensions
     public static void AddAspNetIdentity(this IHostApplicationBuilder builder)
     {
         builder.Services
-            .AddIdentity<IdentityUser, IdentityRole>(options =>
+            .AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
                 options.Lockout.MaxFailedAccessAttempts = 3;
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
