@@ -10,7 +10,7 @@ builder.AddServiceDefaults();                   // .NET Aspire
 builder.AddDatabase();                          // Aspire-linked Database
 builder.AddAspNetIdentity();                    // ASP.NET Identity
 builder.Services.AddControllersWithViews();     // ASP.NET MVC
-builder.Services.AddRazorPages();               // For ASP.NET Identity
+
 
 // =========================================================
 // HTTP Pipeline
@@ -27,7 +27,6 @@ app.UseRouting();
 
 app.UseAuthorization();                         // ASP.NET Identity
 app.MapDefaultControllerRoute();                // ASP.NET MVC
-app.MapRazorPages();                            // For ASP.NET Identity
 
 // =========================================================
 // Run the Service
