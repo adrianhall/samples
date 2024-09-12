@@ -13,9 +13,89 @@ public class AccountController(
     UserManager<ApplicationUser> userManager,
     SignInManager<ApplicationUser> signInManager,
     IEmailSender<ApplicationUser> emailSender,
-    ILogger<AccountController> logger
+    ILogger<AccountController> logger,
+    IWebHostEnvironment environment
     ) : Controller
 {
+    /// <summary>
+    /// Determines if the user should be locked out according to the rules of lockouts.
+    /// </summary>
+    internal bool LockoutOnFailure { get => !environment.IsDevelopment(); }
+
+    #region Login
+    [HttpGet]
+    public IActionResult Login([FromQuery] string? returnUrl)
+    {
+        returnUrl ??= Url.Content("~/");
+        return View(new LoginViewModel() { ReturnUrl = returnUrl });
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Login([FromForm] LoginInputModel model)
+    {
+        logger.LogTrace("Login: form = {json}", JsonSerializer.Serialize(model));
+        model.ReturnUrl ??= Url.Content("~/");
+        if (!ModelState.IsValid || model.Email is null || model.Password is null)
+        {
+            logger.LogDebug("Login: form is invalid");
+            ModelState.AddModelError(string.Empty, "Form is invalid");
+            return View(new LoginViewModel(model));
+        }
+
+        ApplicationUser? user = await userManager.FindByEmailAsync(model.Email);
+        if (user is null)
+        {
+            logger.LogDebug("Login: email address {email} not found.", model.Email);
+            ModelState.AddModelError(string.Empty, "Unknown user/password combination.");
+            return View(new LoginViewModel(model));
+        }
+
+        var result = await signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, lockoutOnFailure: LockoutOnFailure);
+        if (result.Succeeded)
+        {
+            logger.LogDebug("Login: password sign in for {email} succeeded.", model.Email);
+            return LocalRedirect(model.ReturnUrl);
+        }
+
+        if (result.IsLockedOut)
+        {
+            logger.LogDebug("Login: email address {email} is locked out", model.Email);
+            ModelState.AddModelError(string.Empty, "Locked out.");
+            return View(new LoginViewModel(model));
+        }
+
+        logger.LogDebug("Login: password sign in for {email} failed.", model.Email);
+        ModelState.AddModelError(string.Empty, "Unknown user/password combination.");
+        return View(new LoginViewModel(model));
+    }
+    #endregion
+
+    #region Logout
+    [HttpGet]
+    public async Task<IActionResult> Logout([FromQuery] string? returnUrl)
+    {
+        returnUrl ??= Url.Content("~/");
+        if (!signInManager.IsSignedIn(HttpContext.User))
+        {
+            logger.LogTrace("Logout: User is not signed in - redirecting");
+            return LocalRedirect(returnUrl);
+        }
+
+        ApplicationUser? user = await userManager.GetUserAsync(HttpContext.User);
+        if (user is not null)
+        {
+            logger.LogTrace("Logout: Logging out {email}", user.Email);
+        }
+        else
+        {
+            logger.LogTrace("Logout: Cannot determine user record - something is very wrong");
+        }
+
+        await signInManager.SignOutAsync();
+        return LocalRedirect(returnUrl);
+    }
+    #endregion
+
     #region Register
     [HttpGet]
     public async Task<IActionResult> ConfirmEmail([FromQuery] string? userId, [FromQuery] string? token)
