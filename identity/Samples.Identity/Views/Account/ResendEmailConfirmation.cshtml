@@ -1,0 +1,36 @@
+﻿@using Samples.Identity.Models.Account
+@model EmailConfirmationViewModel
+@{
+    ViewBag.BodyClass = "layout--account";
+    ViewBag.Title = "Resend email confirmation";
+    Layout = "_AccountLayout";
+    string returnUrl = Url.Content("~/");
+}
+
+@section StyleSheets {
+    <link rel="stylesheet" href="https://unpkg.com/bs-brain@2.0.4/components/registrations/registration-6/assets/css/registration-6.css" />
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="mb-5">
+            <h2 class="h3">Resend email confirmation?</h2>
+            <p>You have been send a confirmation link via email.  The email confirmation link generally arrives within 20 minutes.  If you did not receive a confirmation link, you can request a new one below.</p>
+            <p>
+                <a asp-controller="Acocunt" asp-action="Login" class="link-primary text-decoration-none">Sign in</a>
+            </p>
+        </div>
+    </div>
+</div>
+<form method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input asp-for="Email" type="hidden" />
+    <input asp-for="Timestamp" type="hidden" />
+    <div class="row gy-3 overflow-hidden">
+        <div class="col-12">
+            <div class="d-grid">
+                <button class="btn bsb-btn-2xl btn-primary" type="submit">Resend confirmation</button>
+            </div>
+        </div>
+    </div>
+</form>

@@ -34,6 +34,7 @@
     <PackageReference Include="Microsoft.ClearScript.V8.Native.win-arm64" Version="$(ClearScriptVersion)" />
     <PackageReference Include="Microsoft.ClearScript.V8.Native.win-x64" Version="$(ClearScriptVersion)" />
     <PackageReference Include="Microsoft.ClearScript.V8.Native.win-x86" Version="$(ClearScriptVersion)" />
+    <PackageReference Include="Profanity.Detector" Version="0.1.8" />
   </ItemGroup>
 
   <ItemGroup>

@@ -20,6 +20,7 @@ public record RegisterInputModel
     public string? Email { get; set; }
 
     [Required, MinLength(1), MaxLength(100)]
+    [RegularExpression("^[a-zA-Z ]+$")]
     public string? DisplayName { get; set; }
 
     [Required, DataType(DataType.Password)]

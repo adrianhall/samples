@@ -2,6 +2,7 @@
 using JavaScriptEngineSwitcher.V8;
 using Microsoft.AspNetCore.Identity;
 using Samples.Identity.Data;
+using Samples.Identity.Services;
 
 namespace Samples.Identity.Extensions;
 
@@ -42,7 +43,10 @@ internal static class StartupExtensions
 
                 options.User.RequireUniqueEmail = true;
             })
-            .AddEntityFrameworkStores<ApplicationDbContext>();
+            .AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddDefaultTokenProviders();
+
+        builder.Services.AddScoped<IEmailSender<ApplicationUser>, LoggingEmailSender>();
     }
 
     /// <summary>
