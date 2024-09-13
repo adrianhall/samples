@@ -1,63 +1,45 @@
 ﻿@using Samples.Identity.Models.Account
 @model LoginViewModel
 @{
-    ViewBag.BodyClass = "layout--account";
     ViewBag.Title = "Sign in";
     Layout = "_AccountLayout";
 }
 
-@section StyleSheets {
-    <link rel="stylesheet" href="https://unpkg.com/bs-brain@2.0.4/components/registrations/registration-6/assets/css/registration-6.css" />
-}
-
-<div class="row">
-    <div class="col-12">
-        <div class="mb-5">
-            <h2 class="h3">Sign in</h2>
-            <h3 class="fs-6 fw-normal text-secondary m-0">Enter your credentials</h3>
-        </div>
-    </div>
+<div class="text-center">
+    <h1 class="h4 text-gray-800 mb-4">Welcome Back!</h1>
 </div>
 <form method="post">
     <input asp-for="ReturnUrl" type="hidden" />
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <div class="row gy-3 overflow-hidden">
-        <div class="col-12">
-            <div class="form-floating mb-3">
-                <input asp-for="Email" class="form-control" placeholder="name@example.com" required>
-                <label asp-for="Email" class="form-label">Email</label>
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="col-12">
-            <div class="form-floating mb-3">
-                <input asp-for="Password" class="form-control" placeholder="Password" required>
-                <label asp-for="Password" class="form-label">Password</label>
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="col-12">
-            <div class="checkbox mb-3">
-                <label asp-for="RememberMe" class="form-label">
-                   <input class="form-check-input" asp-for="RememberMe" />
-                   @Html.DisplayNameFor(m => m.RememberMe)
-                </label>
-            </div>
-        </div>
-
-        <div class="col-12">
-            <div class="d-grid">
-                <button class="btn bsb-btn-2xl btn-primary" type="submit">Sign in</button>
-            </div>
-        </div>
+    <div class="form-floating mb-3">
+        <input asp-for="Email" class="form-control" placeholder="Enter email addreess...">
+        <label asp-for="Email">Email address</label>
     </div>
+    <div class="invalid-feedback">
+        <span asp-validation-for="Email"></span>
+    </div>
+    <div class="form-floating mb-3">
+        <input asp-for="Password" class="form-control" placeholder="Password">
+        <label asp-for="Password">Password</label>
+    </div>
+    <div action="invalid-feedback">
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+    <div class="form-check">
+        <input asp-for="RememberMe" class="form-check-input">
+        <label asp-for="RememberMe" class="form-check-label">
+            @Html.DisplayNameFor(m => m.RememberMe)
+        </label>
+    </div>
+    <button type="submit" class="btn btn-primary btn-user btn-block">Sign in</button>
 </form>
-<div class="row">
-    <div class="col-12">
-        <hr class="mt-5 mb-4 border-secondary-subtle">
-        <p class="m-0 text-secondary text-center">
-            Don't have an account?
-            <a asp-controller="Account" asp-action="Register" class="link-primary text-decoration-none">Sign up</a>
-        </p>
+<hr/>
+<div class="container-fluid">
+    <div class="text-center">
+        <a class="small" asp-controller="Account" asp-action="ForgotPassword">Forgot password?</a>
+    </div>
+    <div class="text-center">
+        <a class="small" asp-controller="Account" asp-action="Register">Create an account!</a>
     </div>
 </div>
+

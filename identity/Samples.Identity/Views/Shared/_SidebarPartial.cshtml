@@ -1,0 +1,55 @@
+﻿@using Samples.Identity.Data
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    bool isSignedIn = SignInManager.IsSignedIn(User);
+    ApplicationUser? userRecord = await UserManager.GetUserAsync(User);
+    bool isAdminUser = userRecord is not null ? await UserManager.IsInRoleAsync(userRecord, "admin") : false;
+}
+
+<!-- Sidebar -->
+<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+    <partial name="_SidebarBrand" />
+    <li class="text-center d-none d-md-block">
+        <hr class="sidebar-divider">
+    </li>
+
+    <!-- TODO: Tag Helper to add "active" to current route -->
+    @if (isSignedIn)
+    {
+        <li class="nav-item">
+            <a class="nav-link" asp-controller="Account" asp-action="Profile">
+                <i class="bi bi-person-vcard"></i>
+                <span>Profile</span>
+            </a>
+        </li>
+    }
+
+    @if (isAdminUser)
+    {
+        <li class="text-center d-none d-md-block">
+            <hr class="sidebar-divider">
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-controller="Manage" asp-action="Users">
+                <i class="bi bi-people-fill"></i>
+                <span>Users</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-controller="Manage" asp-action="Roles">
+                <i class="bi bi-person-fill-gear"></i>
+                <span>Roles</span>
+            </a>
+        </li>
+    }
+
+    <!-- Sidebar Toggler (Sidebar) -->
+    <li class="text-center d-none d-md-block">
+        <hr class="sidebar-divider">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+    </li>
+</ul>
+<!-- End of Sidebar -->

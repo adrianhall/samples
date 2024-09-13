@@ -63,12 +63,15 @@ internal static class StartupExtensions
 
         builder.Services.AddWebOptimizer(pipeline =>
         {
-            pipeline.AddScssBundle("/css/styles.css", "/css/styles.scss");
+            pipeline.AddScssBundle("/css/site.css", "/css/site.scss");
 
             if (!builder.Environment.IsDevelopment())
             {
                 pipeline.MinifyCssFiles();
                 pipeline.AddFiles("text/css", "/css/*");
+
+                pipeline.MinifyJsFiles();
+                pipeline.AddFiles("text/javascript", "/js/*");
             }
         });
     }

@@ -4,22 +4,26 @@
 }
 
 @section StyleSheets {
-    <!-- Google fonts-->
-    <link rel="preconnect" href="https://fonts.gstatic.com" />
-    <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,600;1,600&amp;display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,300;0,500;0,600;0,700;1,300;1,500;1,600;1,700&amp;display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;1,400&amp;display=swap" rel="stylesheet" />
-    <link href="~/css/home/styles.css" rel="stylesheet" />
     @RenderSection("StyleSheets", required: false)
 }
 
-<partial name="_Navigation" />
+<div id="wrapper">
+    <partial name="_SidebarPartial" />
+    <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content">
+            <partial name="_TopbarPartial" />
+            <div class="container-fluid" style="min-height: 90vh;">
+                @RenderBody()
+            </div> <!-- // .container-fluid ->
+        </div> <!-- // #content -->
+        <partial name="_Footer" />
+    </div> <!-- // #content-wrapper ->
+</div> <!-- // #wrapper -->
 
-@RenderBody()
-
-<partial name="_Footer" />
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="bi bi-chevron-up"></i>
+</a>
 
 @section Scripts {
-    <script src="~/js/home/scripts.js"></script>
     @RenderSection("Scripts", required: false)
 }

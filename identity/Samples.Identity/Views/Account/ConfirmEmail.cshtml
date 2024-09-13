@@ -1,24 +1,17 @@
 ﻿@using Samples.Identity.Models.Account
 @model EmailConfirmationViewModel
 @{
-    ViewBag.BodyClass = "layout--account";
-    ViewBag.Title = "Email confirmed!";
+    ViewBag.Title = "Email confirmed";
     Layout = "_AccountLayout";
     string returnUrl = Url.Content("~/");
 }
 
-@section StyleSheets {
-    <link rel="stylesheet" href="https://unpkg.com/bs-brain@2.0.4/components/registrations/registration-6/assets/css/registration-6.css" />
-}
-
-<div class="row">
-    <div class="col-12">
-        <div class="mb-5">
-            <h2 class="h3">Email Confirmed</h2>
-            <p>That you for confirming your email.</p>
-            <p>
-                <a asp-controller="Account" asp-action="Login" class="link-primary text-decoration-none">Sign in</a>
-            </p>
-        </div>
-    </div>
+<div class="text-center">
+    <h1 class="h4 text-gray-800 mb-4">Email confirmed!</h1>
+</div>
+<div class="text-center">
+    <p>Thank you for confirming your email.</p>
+</div>
+<div class="text-center">
+    <a asp-controller="Account" asp-action="Login" asp-route-returnUrl="@returnUrl">Sign in</a>
 </div>

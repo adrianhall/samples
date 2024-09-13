@@ -1,38 +1,40 @@
 ﻿@using Samples.Identity.Data
 @using Microsoft.AspNetCore.Identity
-@using Microsoft.AspNetCore.Http.Extensions
-
-@inject SignInManager<ApplicationUser> SignInManager
+@using Microsoft.AspNetCore.Http.Extensions;
 @inject UserManager<ApplicationUser> UserManager
+@inject SignInManager<ApplicationUser> SignInManager
 
 @{
     bool isSignedIn = SignInManager.IsSignedIn(User);
     ApplicationUser? userRecord = await UserManager.GetUserAsync(User);
+    string returnUrl = Context.Request.GetEncodedUrl();
 }
 
-<ul class="navbar-nav ms-auto me-4 my-3 my-lg-0">
-    @if (isSignedIn)
-    {
-        <a class="btn btn-primary rounded-pill px-3 mb-2 mb-lg-0" asp-controller="Account" asp-action="Logout">
-            <span class="d-flex align-items-center">
-                <i class="bi-person-circle me-2"></i>
-                <span class="small">@userRecord?.DisplayName</span>
-            </span>
-        </a>
-    }
-    else
-    {
-        <a class="btn btn-primary px-3 mb-2 mx-2 mb-lg-0" asp-controller="Account" asp-action="Login" asp-route-returnUrl="@Context.Request.GetEncodedUrl()">
-            <span class="d-flex align-items-center">
-                <i class="bi-box-arrow-in-right me-2"></i>
-                <span class="small">Sign in</span>
-            </span>
-        </a>
-        <a class="btn btn-warning px-3 mb-2 mb-lg-0" asp-controller="Account" asp-action="Register">
-            <span class="d-flex align-items-center">
-                <i class="bi-person-add me-2"></i>
-                <span class="small">Register</span>
-            </span>
-        </a>
-    }
-</ul>
+@if (isSignedIn)
+{
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item dropdown no-arrow">
+            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">@userRecord?.DisplayName</span>
+                <img class="img-profile rounded-circle" src="img/undraw-profile.svg"/>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                <a class="dropdown-item" asp-controller="Account" asp-action="Profile">
+                    <i class="bi bi-person mr-2 text-gray-400"></i> Profile
+                </a>
+                <a class="dropdown-item" asp-controller="Account" asp-action="Logout">
+                    <i class="bi bi-box-arrow-right mr-2 text-gray-400"></i> Sign out
+                </a>
+            </div>
+        </li>
+    </ul>
+}
+else
+{
+    <a asp-controller="Account" asp-action="Login" asp-route-returnUrl="@returnUrl" class="btn btn-secondary mx-2">
+        Login
+    </a>
+    <a asp-controller="Account" asp-action="Register" class="btn btn-warning mx-2">
+        Register
+    </a>
+}

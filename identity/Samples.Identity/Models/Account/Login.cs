@@ -19,7 +19,7 @@ public record LoginInputModel
     [Required, EmailAddress]
     public string? Email { get; set; }
 
-    [Required, DataType(DataType.Password)]
+    [Required, DataType(DataType.Password), StringLength(64, MinimumLength = 5)]
     public string? Password { get; set; }
 
     [Display(Name = "Remember me?")]
