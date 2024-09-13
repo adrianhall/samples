@@ -10,27 +10,38 @@
 </div>
 <form class="user" method="post">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <div class="form-group">
-        <input asp-for="DisplayName" class="form-control form-control-user" placeholder="Display Name" required>
-            <label asp-for="DisplayName" class="form-label">Display Name</label>
-            <span asp-validation-for="DisplayName" class="text-danger"></span>
+    <div class="form-floating mb-3">
+        <input asp-for="Email" class="form-control" placeholder="Enter email addreess...">
+        <label asp-for="Email">Email address</label>
+    </div>
+    <div class="invalid-feedback">
+        <span asp-validation-for="Email"></span>
     </div>
 
-    <div class="form-group">
-        <input asp-for="Email" class="form-control form-control-user" placeholder="name@example.com" required>
-            <label asp-for="Email" class="form-label">Email</label>
-            <span asp-validation-for="Email" class="text-danger"></span>
+    <div class="form-floating mb-3">
+        <input asp-for="DisplayName" class="form-control" placeholder="Enter your display name...">
+        <label asp-for="DisplayName">Display Name</label>
     </div>
-    <div class="form-group">
-        <input asp-for="Password" class="form-control form-control-user" placeholder="Password" required>
-            <label asp-for="Password" class="form-label">Password</label>
-            <span asp-validation-for="Password" class="text-danger"></span>
+    <div class="invalid-feedback">
+        <span asp-validation-for="DisplayName"></span>
     </div>
-    <div class="form-group">
-        <input asp-for="ConfirmPassword" class="form-control form-control-user" placeholder="Confirm Password" required>
-            <label asp-for="ConfirmPassword" class="form-label">Password</label>
-            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+
+    <div class="form-floating mb-3">
+        <input asp-for="Password" class="form-control" placeholder="Password">
+        <label asp-for="Password">Password</label>
     </div>
+    <div action="invalid-feedback">
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+
+    <div class="form-floating mb-3">
+        <input asp-for="ConfirmPassword" class="form-control" placeholder="Confirm password">
+        <label asp-for="ConfirmPassword">Confirm password</label>
+    </div>
+    <div action="invalid-feedback">
+        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+    </div>
+
     <button type="submit" class="btn btn-primary btn-user btn-block">Register</button>
 </form>
 <hr />
