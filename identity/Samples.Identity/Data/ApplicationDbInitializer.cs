@@ -96,7 +96,7 @@ public class ApplicationDbInitializer(
             Id = Guid.NewGuid().ToString(),
             Email = $"{userRecord.UserName.ToLowerInvariant()}@contoso-email.com",
             EmailConfirmed = true,
-            UserName = userRecord.UserName,
+            UserName = $"{userRecord.UserName.ToLowerInvariant()}@contoso-email.com",
             DisplayName = userRecord.DisplayName
         };
         IdentityResult? result = await userManager.CreateAsync(newUser, defaultPassword);
