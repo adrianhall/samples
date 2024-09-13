@@ -1,5 +1,6 @@
 ﻿@using Samples.Identity.Data
 @using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Http.Extensions
 
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
@@ -21,7 +22,7 @@
     }
     else
     {
-        <a class="btn btn-primary px-3 mb-2 mx-2 mb-lg-0" asp-controller="Account" asp-action="Login">
+        <a class="btn btn-primary px-3 mb-2 mx-2 mb-lg-0" asp-controller="Account" asp-action="Login" asp-route-returnUrl="@Context.Request.GetEncodedUrl()">
             <span class="d-flex align-items-center">
                 <i class="bi-box-arrow-in-right me-2"></i>
                 <span class="small">Sign in</span>
