@@ -16,7 +16,7 @@ public record LoginInputModel
         ReturnUrl = model.ReturnUrl;
     }
 
-    [Required, EmailAddress]
+    [Required, EmailAddress(ErrorMessage = "A valid email address is required")]
     public string? Email { get; set; }
 
     [Required, DataType(DataType.Password), StringLength(64, MinimumLength = 5)]

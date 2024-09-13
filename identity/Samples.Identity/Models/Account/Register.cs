@@ -16,11 +16,11 @@ public record RegisterInputModel
         DisplayName = model.DisplayName;
     }
 
-    [Required, EmailAddress]
+    [Required, EmailAddress(ErrorMessage = "A valid email address is required.")]
     public string? Email { get; set; }
 
-    [Required, MinLength(1), MaxLength(100)]
-    [RegularExpression("^[a-zA-Z ]+$")]
+    [Required, StringLength(100, MinimumLength = 1, ErrorMessage = "Enter a name of between 1 and 100 characters")]
+    [RegularExpression("^[a-zA-Z0-9 ]+$", ErrorMessage = "Only alphanumeric characters and the space are allowed")]
     public string? DisplayName { get; set; }
 
     [Required, DataType(DataType.Password)]
