@@ -110,7 +110,8 @@ public class ApplicationDbInitializer(
     /// <returns>A task that resolves when the operation is complete.</returns>
     internal async Task EnsureUserIsInRolesAsync(SeedUser userRecord)
     {
-        ApplicationUser? user = await userManager.FindByNameAsync(userRecord.UserName);
+        string email = $"{userRecord.UserName.ToLowerInvariant()}@contoso-email.com";
+        ApplicationUser? user = await userManager.FindByEmailAsync(email);
         if (user is null)
         {
             throw new ApplicationException($"User '{userRecord.UserName}' does not exist.");

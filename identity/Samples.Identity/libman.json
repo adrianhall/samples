@@ -25,6 +25,16 @@
     {
       "library": "jquery-easing@1.4.1",
       "destination": "wwwroot/lib/jquery-easing/"
+    },
+    {
+      "provider": "cdnjs",
+      "library": "datatables.net-bs5@2.1.6",
+      "destination": "wwwroot/lib/datatables.net-bs5/"
+    },
+    {
+      "provider": "cdnjs",
+      "library": "datatables.net@2.1.6",
+      "destination": "wwwroot/lib/datatables.net/"
     }
   ]
 }

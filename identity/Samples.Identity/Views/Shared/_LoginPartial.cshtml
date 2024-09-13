@@ -7,7 +7,7 @@
 @{
     bool isSignedIn = SignInManager.IsSignedIn(User);
     ApplicationUser? userRecord = await UserManager.GetUserAsync(User);
-    string returnUrl = Context.Request.GetEncodedUrl();
+    string returnUrl = Context.Request.Path.ToString();
 }
 
 @if (isSignedIn)

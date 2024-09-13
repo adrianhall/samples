@@ -1,0 +1,47 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    Layout = "_HomeLayout";
+}
+
+@section StyleSheets {
+    <link rel="stylesheet" href="~/lib/datatables.net-bs5/datatables.bootstrap5.min.css"/>
+}
+
+@section Scripts {
+    <script src="~/lib/datatables.net/datatables.min.js"></script>
+    <script src="~/lib/datatables.net-bs5/datatables.bootstrap5.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(() => {
+            var tableHandler = new DataTable('#rolesTable', {
+                ajax: {
+                    url: '/Manage/RolesTableHandler',
+                    type: 'Get'
+                },
+                processing: true,
+                serverSide: true,
+                MediaRecorder: [[2, 'asc']]
+            });
+
+            tableHandler.on('click', 'tbody tr', function () {
+                let data = tableHandler.row(this).data();
+                alert(`Click on row with ID ${data.Id}`);
+            });
+        });
+    </script>
+}
+
+<div id="container">
+    <div id="row">
+        <table id="rolesTable" class="table table-striped" style="width: 100%">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Normalized Name</th>
+                    <th># Members</th>
+                </tr>
+            </thead>
+        </table> 
+    </div>
+</div>
+
