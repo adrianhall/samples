@@ -2,7 +2,21 @@
 
 namespace Samples.Identity.Data;
 
-public class ApplicationUser : IdentityUser
+/// <summary>
+/// The form of the application user additional fields.
+/// </summary>
+public interface IApplicationUser
 {
-    public string? DisplayName { get; set; }
+    string FirstName { get; set; }
+    string LastName { get; set; }
+    string DisplayName { get; set; }
+}
+
+public class ApplicationUser : IdentityUser, IApplicationUser
+{
+    public string FirstName { get; set; } = string.Empty;
+
+    public string LastName { get; set; } = string.Empty;
+
+    public string DisplayName { get; set; } = string.Empty;
 }

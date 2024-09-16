@@ -25,8 +25,7 @@ app.UseHttpsRedirection();
 app.UseWebOptimizer();                          // LigerShark WebOptimizer
 app.UseStaticFiles();
 app.UseRouting();
-
-app.UseAuthorization();                         // ASP.NET Identity
+app.UseAspNetIdentity();                        // ASP.NET Identity
 app.MapDefaultControllerRoute();                // ASP.NET MVC
 
 // =========================================================

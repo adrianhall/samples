@@ -11,6 +11,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Samples.ServiceDefaults", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "aspire", "aspire", "{5E0BD5DA-1E99-49C5-B615-3D8301B4DA88}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{C7C865BE-585D-4495-8EC2-7DBCBE601271}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{8A5C19B4-8ECD-49C3-9EF7-C73F75B23047}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Samples.Identity.Test", "test\Samples.Identity.Test\Samples.Identity.Test.csproj", "{7F3CA3C3-D3DA-4ECE-B1CE-81D1BD9A3090}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,13 +35,20 @@ Global
 		{A1976620-1027-4733-A931-16B691A505BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1976620-1027-4733-A931-16B691A505BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A1976620-1027-4733-A931-16B691A505BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F3CA3C3-D3DA-4ECE-B1CE-81D1BD9A3090}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F3CA3C3-D3DA-4ECE-B1CE-81D1BD9A3090}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F3CA3C3-D3DA-4ECE-B1CE-81D1BD9A3090}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F3CA3C3-D3DA-4ECE-B1CE-81D1BD9A3090}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{DA5E07EF-9EFC-4916-B2D7-6A3198F7F405} = {C7C865BE-585D-4495-8EC2-7DBCBE601271}
 		{4F46958F-2159-4CD9-A04D-FECF81906F71} = {5E0BD5DA-1E99-49C5-B615-3D8301B4DA88}
 		{A1976620-1027-4733-A931-16B691A505BB} = {5E0BD5DA-1E99-49C5-B615-3D8301B4DA88}
+		{5E0BD5DA-1E99-49C5-B615-3D8301B4DA88} = {C7C865BE-585D-4495-8EC2-7DBCBE601271}
+		{7F3CA3C3-D3DA-4ECE-B1CE-81D1BD9A3090} = {8A5C19B4-8ECD-49C3-9EF7-C73F75B23047}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AAC3F6F1-1014-4DDA-AB86-54D70DE3A393}

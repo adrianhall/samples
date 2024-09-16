@@ -1,5 +1,4 @@
-﻿@using Samples.Identity.Models.Account
-@model EmailConfirmationViewModel
+﻿@model EmailConfirmationViewModel
 @{
     ViewBag.Title = "Resend email conformation";
     Layout = "_AccountLayout";
@@ -10,13 +9,12 @@
     <h1 class="h4 text-gray-800 mb-4">Resend email confirmation?</h1>
 </div>
 <div class="text-center">
-    <p>You have been send a confirmation link via email.  The email confirmation link generally arrives within 20 minutes.  If you did not receive a confirmation link, you can request a new one below.</p>
+    <p>The link you clicked on is no longer valid.  You can request a new one below.</p>
 </div>
 <form method="post">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <input asp-for="Email" type="hidden" />
-    <input asp-for="Timestamp" type="hidden" />
     <div class="text-center">
-        <button type="submit" class="btn btn-primary btn-user btn-block">Sign in</button>
+        <button type="submit" class="btn btn-primary btn-user btn-block">Resend confirmation</button>
     </div>
 </form>

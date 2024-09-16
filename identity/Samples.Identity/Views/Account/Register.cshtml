@@ -1,5 +1,4 @@
-﻿@using Samples.Identity.Models.Account
-@model RegisterViewModel
+﻿@model RegisterViewModel
 @{
     ViewBag.Title = "Create account";
     Layout = "_AccountLayout";
@@ -16,6 +15,22 @@
     </div>
     <div class="invalid-feedback">
         <span asp-validation-for="Email"></span>
+    </div>
+
+    <div class="form-floating mb-3">
+        <input asp-for="FirstName" class="form-control" placeholder="Enter your first name...">
+        <label asp-for="FirstName">First Name</label>
+    </div>
+    <div class="invalid-feedback">
+        <span asp-validation-for="FirstName"></span>
+    </div>
+
+    <div class="form-floating mb-3">
+        <input asp-for="LastName" class="form-control" placeholder="Enter your last name...">
+        <label asp-for="LastName">Last Name</label>
+    </div>
+    <div class="invalid-feedback">
+        <span asp-validation-for="LastName"></span>
     </div>
 
     <div class="form-floating mb-3">
@@ -46,6 +61,6 @@
 </form>
 <hr />
 <div class="text-secondary text-center">
-    Already have an account? 
+    Already have an account?
     <a class="link-primary text-decoration-none" asp-controller="Account" asp-action="Login">Sign in!</a>
 </div>

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Authentication;
+using System.ComponentModel.DataAnnotations;
 
 namespace Samples.Identity.Models.Account;
 
@@ -8,33 +9,35 @@ public record LoginInputModel
     {
     }
 
-    public LoginInputModel(LoginInputModel model)
+    public LoginInputModel(LoginInputModel inputModel)
     {
-        Email = model.Email;
-        Password = model.Password;
-        RememberMe = model.RememberMe;
-        ReturnUrl = model.ReturnUrl;
+        Email = inputModel.Email;
+        Password = inputModel.Password;
+        RememberMe = inputModel.RememberMe;
+        ReturnUrl = inputModel.ReturnUrl;
     }
 
-    [Required, EmailAddress(ErrorMessage = "A valid email address is required")]
-    public string? Email { get; set; }
+    [Required, EmailAddress, StringLength(256, MinimumLength = 3)]
+    public string Email { get; set; } = string.Empty;
 
-    [Required, DataType(DataType.Password), StringLength(64, MinimumLength = 5)]
-    public string? Password { get; set; }
+    [Required, DataType(DataType.Password), StringLength(64, MinimumLength = 3)]
+    public string Password { get; set; } = string.Empty;
 
     [Display(Name = "Remember me?")]
     public bool RememberMe { get; set; } = true;
 
-    public string? ReturnUrl { get; set; }
+    public string ReturnUrl { get; set; } = string.Empty;
 }
 
 public record LoginViewModel : LoginInputModel
 {
-    public LoginViewModel() : base()
+    public LoginViewModel()
     {
     }
 
-    public LoginViewModel(LoginInputModel model) : base(model)
+    public LoginViewModel(LoginInputModel inputModel) : base(inputModel)
     {
     }
+
+    public IList<AuthenticationScheme> ExternalProviders { get; set; } = [];
 }

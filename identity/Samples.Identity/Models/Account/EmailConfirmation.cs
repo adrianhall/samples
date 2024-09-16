@@ -8,25 +8,25 @@ public record EmailConfirmationInputModel
     {
     }
 
-    public EmailConfirmationInputModel(EmailConfirmationInputModel input)
+    public EmailConfirmationInputModel(EmailConfirmationInputModel inputModel)
     {
-        Email = input.Email;
-        Timestamp = input.Timestamp;
+        Email = inputModel.Email;
+        ReturnUrl = inputModel.ReturnUrl;
     }
 
-    [Required, EmailAddress]
-    public string? Email { get; set; }
+    [Required, EmailAddress, StringLength(256, MinimumLength = 3)]
+    public string Email { get; set; } = string.Empty;
 
-    public long Timestamp { get; set; } = 0L;
+    public string ReturnUrl { get; set; } = string.Empty;
 }
 
 public record EmailConfirmationViewModel : EmailConfirmationInputModel
 {
-    public EmailConfirmationViewModel() : base()
+    public EmailConfirmationViewModel()
     {
     }
 
-    public EmailConfirmationViewModel(EmailConfirmationInputModel input) : base(input)
+    public EmailConfirmationViewModel(EmailConfirmationInputModel inputModel) : base(inputModel)
     {
     }
 }

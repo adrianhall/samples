@@ -1,43 +1,63 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Authentication;
+using Samples.Identity.Data;
+using System.ComponentModel.DataAnnotations;
 
 namespace Samples.Identity.Models.Account;
 
-public record RegisterInputModel
+public record RegisterInputModel : IApplicationUser
 {
     public RegisterInputModel()
     {
     }
 
-    public RegisterInputModel(RegisterInputModel model)
+    public RegisterInputModel(RegisterInputModel inputModel)
     {
-        Email = model.Email;
-        Password = model.Password;
-        ConfirmPassword = model.ConfirmPassword;
-        DisplayName = model.DisplayName;
+        Email = inputModel.Email;
+        Password = inputModel.Password;
+        ConfirmPassword = inputModel.ConfirmPassword;
+        FirstName = inputModel.FirstName;
+        LastName = inputModel.LastName;
+        DisplayName = inputModel.DisplayName;
+        ReturnUrl = inputModel.ReturnUrl;
     }
 
-    [Required, EmailAddress(ErrorMessage = "A valid email address is required.")]
-    public string? Email { get; set; }
+    [Required, EmailAddress, StringLength(256, MinimumLength = 3)]
+    public string Email { get; set; } = string.Empty;
 
-    [Required, StringLength(100, MinimumLength = 1, ErrorMessage = "Enter a name of between 1 and 100 characters")]
-    [RegularExpression("^[a-zA-Z0-9 ]+$", ErrorMessage = "Only alphanumeric characters and the space are allowed")]
-    public string? DisplayName { get; set; }
+    [Required, DataType(DataType.Password), StringLength(64, MinimumLength = 3)]
+    public string Password { get; set; } = string.Empty;
 
-    [Required, DataType(DataType.Password)]
-    public string? Password { get; set; }
-
-    [Required, DataType(DataType.Password)]
+    [Required, DataType(DataType.Password), StringLength(64, MinimumLength = 3)]
     [Compare(nameof(Password), ErrorMessage = "Password and confirmation must match")]
-    public string? ConfirmPassword { get; set; }
+    public string ConfirmPassword { get; set; } = string.Empty;
+
+    [Required]
+    [StringLength(64, MinimumLength = 1)]
+    [RegularExpression(@"^[\w'\-,.]*[^_!¡?÷?¿\/\\+=@#$%ˆ&*(){}|~<>;:[\]]*$")]
+    public string FirstName { get; set; } = string.Empty;
+
+    [Required]
+    [StringLength(64, MinimumLength = 1)]
+    [RegularExpression(@"^[\w'\-,.]*[^_!¡?÷?¿\/\\+=@#$%ˆ&*(){}|~<>;:[\]]*$")]
+    public string LastName { get; set; } = string.Empty;
+
+    [Required]
+    [StringLength(128, MinimumLength = 1)]
+    [RegularExpression(@"^[\w'\-,.]*[^_!¡?÷?¿\/\\+=@#$%ˆ&*(){}|~<>;:[\]]*$")]
+    public string DisplayName { get; set; } = string.Empty;
+
+    public string ReturnUrl { get; set; } = string.Empty;
 }
 
 public record RegisterViewModel : RegisterInputModel
 {
-    public RegisterViewModel() : base()
+    public RegisterViewModel()
     {
     }
 
     public RegisterViewModel(RegisterInputModel inputModel) : base(inputModel)
     {
     }
+
+    public IList<AuthenticationScheme> ExternalProviders { get; set; } = [];
 }

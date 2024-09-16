@@ -2,6 +2,7 @@
 using JavaScriptEngineSwitcher.V8;
 using Microsoft.AspNetCore.Identity;
 using Samples.Identity.Data;
+using Samples.Identity.Models;
 using Samples.Identity.Services;
 
 namespace Samples.Identity.Extensions;
@@ -47,6 +48,7 @@ internal static class StartupExtensions
             .AddDefaultTokenProviders();
 
         builder.Services.AddScoped<IEmailSender<ApplicationUser>, LoggingEmailSender>();
+        builder.Services.Configure<AccountControllerOptions>(builder.Configuration.GetSection("Identity:Options"));
     }
 
     /// <summary>
@@ -86,5 +88,15 @@ internal static class StartupExtensions
         using IServiceScope scope = app.Services.CreateScope();
         IDbInitializer initializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
         await initializer.InitializeDatabaseAsync();
+    }
+
+    /// <summary>
+    /// Adds ASP.NET Identity into the HTTP pipeline for this application.
+    /// </summary>
+    /// <param name="builder">The web application to modify.</param>
+    internal static void UseAspNetIdentity(this WebApplication app)
+    {
+        app.UseAuthentication();
+        app.UseAuthorization();
     }
 }
