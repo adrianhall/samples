@@ -145,7 +145,6 @@ public class AccountController(
             nameof(AwaitPasswordReset),
             new { model.Email, model.ReturnUrl }
         );
-
     }
 
     /// <summary>
