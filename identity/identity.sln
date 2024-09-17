@@ -15,7 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{C7C865BE-585
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{8A5C19B4-8ECD-49C3-9EF7-C73F75B23047}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Samples.Identity.Test", "test\Samples.Identity.Test\Samples.Identity.Test.csproj", "{7F3CA3C3-D3DA-4ECE-B1CE-81D1BD9A3090}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Samples.Identity.Test", "test\Samples.Identity.Test\Samples.Identity.Test.csproj", "{7F3CA3C3-D3DA-4ECE-B1CE-81D1BD9A3090}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -47,8 +47,12 @@ internal static class StartupExtensions
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
 
-        builder.Services.AddScoped<IEmailSender<ApplicationUser>, LoggingEmailSender>();
         builder.Services.Configure<AccountControllerOptions>(builder.Configuration.GetSection("Identity:Options"));
+
+        builder.Services.Configure<MailerSendOptions>(builder.Configuration.GetSection("Services:MailerSend"));
+        builder.Services.AddScoped<IRazorViewToStringRenderer, RazorViewToStringRenderer>();
+        builder.Services.AddScoped<ISendEmailApi, MailerSendApi>();
+        builder.Services.AddScoped<IEmailSender<ApplicationUser>, MailerSendEmailSender>();
     }
 
     /// <summary>
