@@ -1,0 +1,13 @@
+﻿@model ExternalLoginErrorViewModel
+@{
+    ViewBag.Title = "External login error";
+    Layout = "_AccountLayout";
+    string returnUrl = Url.Content("~/");
+}
+
+<div class="text-center">
+    <h1 class="h4 text-gray-800 mb-4">Error when using external login provider</h1>
+</div>
+<div class="text-center">
+    <p>An error occurred while working with the external login provider: <span class="text-danger">@Model.ErrorMessage</span></p>
+</div>

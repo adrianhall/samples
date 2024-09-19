@@ -1,4 +1,5 @@
-﻿@model LoginViewModel
+﻿@using Microsoft.AspNetCore.Authentication
+@model LoginViewModel
 @{
     ViewBag.Title = "Sign in";
     Layout = "_AccountLayout";
@@ -32,12 +33,27 @@
     </div>
     <button type="submit" class="btn btn-primary btn-user btn-block">Sign in</button>
 </form>
+@if (Model.ExternalProviders.Any())
+{
+    <hr />
+    <div class="container text-center">
+        <h5 class="h5 text-gray-800 mb-1">Sign in with a social provider</h5>
+    @foreach (AuthenticationScheme provider in Model.ExternalProviders.OrderBy(x => x.Name))
+    {
+        <a asp-controller="Account" asp-action="ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" asp-route-provider="@provider.Name" class="text-primary mx-2" style="font-size: 1.4rem; text-decoration: none;">
+            <i class="bi auth-@provider.Name"></i>
+        </a>
+    }
+    </div>
+}
 <hr />
 <div class="container-fluid">
-    <div class="text-center">
-        <a class="small" asp-controller="Account" asp-action="ForgotPassword">Forgot password?</a>
-    </div>
-    <div class="text-center">
-        <a class="small" asp-controller="Account" asp-action="Register">Create an account!</a>
+    <div class="row">
+        <div class="col-6 text-center">
+            <a class="small" asp-controller="Account" asp-action="ForgotPassword">Forgot password?</a>
+        </div>
+        <div class="col-6 text-center">
+            <a class="small" asp-controller="Account" asp-action="Register">Create an account!</a>
+        </div>
     </div>
 </div>

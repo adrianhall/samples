@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -8,6 +9,7 @@ using Samples.Identity.Data;
 using Samples.Identity.Extensions;
 using Samples.Identity.Models;
 using Samples.Identity.Models.Account;
+using System.Security.Claims;
 using System.Text;
 
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
@@ -94,6 +96,81 @@ public class AccountController(
         // User has confirmed their email, so we can now sign them in.
         await signInManager.SignInAsync(user, isPersistent: false);
         return RedirectToHomePage();
+    }
+
+    [HttpGet, AllowAnonymous]
+    public async Task<IActionResult> ExternalLogin([FromQuery] string? returnUrl, [FromQuery] string provider)
+    {
+        logger.LogTrace("GET ExternalLogin returnUrl={returnUrl}, provider={provider}", returnUrl, provider);
+        returnUrl ??= Url.Content("~/");
+        IList<AuthenticationScheme> authProviders = (await signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+        if (!authProviders.Any(x => x.Name.Equals(provider)))
+        {
+            // If the provider is not known, then just go back to the login page.
+            logger.LogWarning("GET ExternalLogin provider={provider} unknown", provider);
+            return RedirectToAction(nameof(Login), new { returnUrl });
+        }
+
+        string? redirectUrl = Url.ActionLink(nameof(ExternalLoginCallback), values: new { returnUrl });
+        AuthenticationProperties properties = signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
+        logger.LogTrace("Returning Challenge for provider={provider}, redirectUrl={redirectUrl}", provider, redirectUrl);
+        return new ChallengeResult(provider, properties);
+    }
+
+    [HttpGet, AllowAnonymous]
+    public async Task<IActionResult> ExternalLoginCallback(string? returnUrl = null, string? remoteError = null)
+    {
+        logger.LogTrace("GET ExternalLoginCallback returnUrl={returnUrl}, remoteError={remoteError}", returnUrl, remoteError);
+        returnUrl ??= Url.Content("~/");
+        if (remoteError is not null)
+        {
+            logger.LogWarning("GET ExternalLoginCallback: remoteError is not null - redirecting to error page");
+            TempData["ErrorMessage"] = $"Error from external provider: {remoteError}";
+            return RedirectToAction(nameof(ExternalLoginError));
+        }
+
+        ExternalLoginInfo? info = await signInManager.GetExternalLoginInfoAsync();
+        if (info is null)
+        {
+            logger.LogWarning("GET ExternalLoginCallback: cannot retrieve external login info - redirecting to error page");
+            TempData["ErrorMessage"] = "Error loading external login information";
+            return RedirectToAction(nameof(ExternalLoginError));
+        }
+
+        // Sign the user in with this external login provider if the user already has a login.
+        var result = await signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor: true);
+        if (result.Succeeded)
+        {
+            logger.LogInformation("{Name} logged in with {LoginProvider} provider", info.Principal.Identity?.Name, info.LoginProvider);
+            return Redirect(returnUrl);
+        }
+
+        if (result.IsLockedOut)
+        {
+            logger.LogInformation("{Name} is locked out", info.Principal.Identity?.Name);
+            return RedirectToAction(nameof(LockedOut));
+        }
+
+        logger.LogInformation("{Name} is not registered yet - registering", info.Principal.Identity?.Name);
+        string email = string.Empty;
+        if (info.Principal.HasClaim(c => c.Type == ClaimTypes.Email))
+        {
+            email = info.Principal.FindFirstValue(ClaimTypes.Email)!;
+        }
+        RegisterExternalLoginViewModel viewModel = new()
+        {
+            ReturnUrl = returnUrl,
+            ProviderDisplayName = info.ProviderDisplayName,
+            Email = email
+        };
+        return View(nameof(RegisterExternalLogin), viewModel);
+    }
+
+    [HttpGet, AllowAnonymous]
+    public IActionResult ExternalLoginError()
+    {
+        ExternalLoginErrorViewModel viewModel = new() { ErrorMessage = TempData["ErrorMessage"]?.ToString() };
+        return View(viewModel);
     }
 
     /// <summary>
@@ -345,6 +422,67 @@ public class AccountController(
         {
             logger.LogDebug("Register: RequireConfirmedAccount = false; sign-in {email} automatically", user.Email);
             await signInManager.SignInAsync(user, isPersistent: false);
+            return Redirect(model.ReturnUrl);
+        }
+
+        await SendConfirmationLinkAsync(user);
+        return RedirectToAction(
+            nameof(AwaitEmailConfirmation),
+            new { model.Email, model.ReturnUrl }
+        );
+    }
+
+    [HttpPost, AllowAnonymous]
+    public async Task<IActionResult> RegisterExternalLogin([FromForm] RegisterExternalLoginInputModel model)
+    {
+        logger.LogTrace("POST RegisterExternalLogin {model}", model.ToJsonString());
+        model.ReturnUrl = HomePageIfNullOrEmpty(model.ReturnUrl);
+        var info = await signInManager.GetExternalLoginInfoAsync();
+        if (info is null)
+        {
+            logger.LogWarning("GET ExternalLoginCallback: cannot retrieve external login info - redirecting to error page");
+            TempData["ErrorMessage"] = "Error loading external login information";
+            return RedirectToAction(nameof(ExternalLoginError));
+        }
+
+        IActionResult DisplayRegisterView()
+        {
+            RegisterExternalLoginViewModel viewModel = new(model) { ProviderDisplayName = info.ProviderDisplayName };
+            return View(viewModel);
+        }
+
+        if (!ModelState.IsValid)
+        {
+            LogAllModelStateErrors(ModelState);
+            return DisplayRegisterView();
+        }
+
+        ApplicationUser user = new()
+        {
+            Id = Guid.NewGuid().ToString("N"),
+            UserName = model.Email,
+            Email = model.Email,
+            FirstName = model.FirstName,
+            LastName = model.LastName,
+            DisplayName = model.DisplayName
+        };
+
+        logger.LogTrace("RegisterExternalLogin: Creating user {json}", user.ToJsonString());
+        IdentityResult result = await userManager.CreateAsync(user);
+        if (!result.Succeeded)
+        {
+            logger.LogError("RegisterExternalLogin: Could not create user {json}: {errors}", user.ToJsonString(), result.Errors);
+            foreach (IdentityError error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+            return DisplayRegisterView();
+        }
+
+        if (!userManager.Options.SignIn.RequireConfirmedAccount)
+        {
+            logger.LogDebug("RegisterExternalLogin: RequireConfirmedAccount = false; sign-in {email} automatically", user.Email);
+            await signInManager.SignInAsync(user, isPersistent: false, info.LoginProvider);
             return Redirect(model.ReturnUrl);
         }
 

@@ -47,6 +47,47 @@ internal static class StartupExtensions
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
 
+        var identityBuilder = builder.Services.AddAuthentication();
+        IConfigurationSection fbCfg = builder.Configuration.GetSection("Identity:Facebook");
+        if (fbCfg.HasKey("ClientId") && fbCfg.HasKey("ClientSecret"))
+        {
+            identityBuilder.AddFacebook(options =>
+            {
+                options.ClientId = fbCfg.GetRequiredString("ClientId");
+                options.ClientSecret = fbCfg.GetRequiredString("ClientSecret");
+            });
+        }
+
+        IConfigurationSection googleCfg = builder.Configuration.GetSection("Identity:Google");
+        if (googleCfg.HasKey("ClientId") && googleCfg.HasKey("ClientSecret"))
+        {
+            identityBuilder.AddGoogle(options =>
+            {
+                options.ClientId = googleCfg.GetRequiredString("ClientId");
+                options.ClientSecret = googleCfg.GetRequiredString("ClientSecret");
+            });
+        }
+
+        IConfigurationSection msftCfg = builder.Configuration.GetSection("Identity:MicrosoftAccount");
+        if (msftCfg.HasKey("ClientId") && msftCfg.HasKey("ClientSecret"))
+        {
+            identityBuilder.AddMicrosoftAccount(options =>
+            {
+                options.ClientId = msftCfg.GetRequiredString("ClientId");
+                options.ClientSecret = msftCfg.GetRequiredString("ClientSecret");
+            });
+        }
+
+        IConfiguration linkedInCfg = builder.Configuration.GetSection("Identity:LinkedIn");
+        if (linkedInCfg.HasKey("ClientId") && linkedInCfg.HasKey("ClientSecret"))
+        {
+            identityBuilder.AddLinkedIn(options =>
+            {
+                options.ClientId = linkedInCfg.GetRequiredString("ClientId");
+                options.ClientSecret = linkedInCfg.GetRequiredString("ClientSecret");
+            });
+        }
+
         builder.Services.Configure<AccountControllerOptions>(builder.Configuration.GetSection("Identity:Options"));
 
         builder.Services.Configure<MailerSendOptions>(builder.Configuration.GetSection("Services:MailerSend"));

@@ -1,0 +1,43 @@
+﻿@model RegisterExternalLoginViewModel
+@{
+    ViewBag.Title = "Register external login";
+    Layout = "_AccountLayout";
+}
+
+<div class="text-center">
+    <h1 class="h4 text-gray-800 mb-4">@Model.ProviderDisplayName - finish your registration</h1>
+</div>
+<form class="user" method="post">
+    <input asp-for="ReturnUrl" type="hidden" />
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-floating mb-3">
+        <input asp-for="Email" class="form-control" disabled>
+        <label asp-for="Email">Email address</label>
+    </div>
+
+    <div class="form-floating mb-3">
+        <input asp-for="FirstName" class="form-control" placeholder="Enter your first name...">
+        <label asp-for="FirstName">First Name</label>
+    </div>
+    <div class="invalid-feedback">
+        <span asp-validation-for="FirstName"></span>
+    </div>
+
+    <div class="form-floating mb-3">
+        <input asp-for="LastName" class="form-control" placeholder="Enter your last name...">
+        <label asp-for="LastName">Last Name</label>
+    </div>
+    <div class="invalid-feedback">
+        <span asp-validation-for="LastName"></span>
+    </div>
+
+    <div class="form-floating mb-3">
+        <input asp-for="DisplayName" class="form-control" placeholder="Enter your display name...">
+        <label asp-for="DisplayName">Display Name</label>
+    </div>
+    <div class="invalid-feedback">
+        <span asp-validation-for="DisplayName"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-user btn-block">Register</button>
+</form>

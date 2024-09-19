@@ -10,6 +10,7 @@
     <EfVersion>8.0.8</EfVersion>
     <AspireVersion>8.2.0</AspireVersion>
     <ClearScriptVersion>7.4.5</ClearScriptVersion>
+    <UserSecretsId>1503e89d-8b11-4d8d-a56a-b265cd17cede</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,6 +21,10 @@
     <PackageReference Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL" Version="$(AspireVersion)" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="$(AspnetVersion)" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="$(AspnetVersion)" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="$(AspnetVersion)" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="$(AspnetVersion)" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.MicrosoftAccount" Version="$(AspnetVersion)" />
+    <PackageReference Include="AspNet.Security.OAuth.LinkedIn" Version="8.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="$(EfVersion)" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="$(EfVersion)">
       <PrivateAssets>all</PrivateAssets>

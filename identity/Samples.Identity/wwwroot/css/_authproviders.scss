@@ -1,0 +1,29 @@
+﻿.auth-Microsoft {
+    &::before {
+        content: "\f65d";
+    }
+}
+
+.auth-Google {
+    &::before {
+        content: "\f3f0";
+    }
+}
+
+.auth-Twitter {
+    &::before {
+        content: "\f5ef";
+    }
+}
+
+.auth-Facebook {
+    &::before {
+        content: "\f344";
+    }
+}
+
+.auth-LinkedIn {
+    &::before {
+        content: "\f472";
+    }
+}
