@@ -1,0 +1,42 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35312.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "keycloak.AppHost", "keycloak.AppHost\keycloak.AppHost.csproj", "{8AE36F74-4729-406D-AB0B-0DAF903F279F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "keycloak.ServiceDefaults", "keycloak.ServiceDefaults\keycloak.ServiceDefaults.csproj", "{2B189BBD-945F-4A08-AFA9-F4306EA4850B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "keycloak.ApiService", "keycloak.ApiService\keycloak.ApiService.csproj", "{768203C6-21EA-4D56-A488-9DD163328CAE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "keycloak.Web", "keycloak.Web\keycloak.Web.csproj", "{23715D6B-2959-483F-8ADD-DBAD59C8FE40}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8AE36F74-4729-406D-AB0B-0DAF903F279F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AE36F74-4729-406D-AB0B-0DAF903F279F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AE36F74-4729-406D-AB0B-0DAF903F279F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AE36F74-4729-406D-AB0B-0DAF903F279F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B189BBD-945F-4A08-AFA9-F4306EA4850B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B189BBD-945F-4A08-AFA9-F4306EA4850B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B189BBD-945F-4A08-AFA9-F4306EA4850B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B189BBD-945F-4A08-AFA9-F4306EA4850B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{768203C6-21EA-4D56-A488-9DD163328CAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{768203C6-21EA-4D56-A488-9DD163328CAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{768203C6-21EA-4D56-A488-9DD163328CAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{768203C6-21EA-4D56-A488-9DD163328CAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23715D6B-2959-483F-8ADD-DBAD59C8FE40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23715D6B-2959-483F-8ADD-DBAD59C8FE40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23715D6B-2959-483F-8ADD-DBAD59C8FE40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23715D6B-2959-483F-8ADD-DBAD59C8FE40}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0DA766E4-98EC-4E50-964C-179F5B2DB31B}
+	EndGlobalSection
+EndGlobal
