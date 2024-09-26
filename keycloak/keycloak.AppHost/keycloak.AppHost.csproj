@@ -9,13 +9,14 @@
     <UserSecretsId>d292b8b7-a493-421b-83b8-5ada973a6494</UserSecretsId>
   </PropertyGroup>
 
-  <ItemGroup>
+	<ItemGroup>
     <ProjectReference Include="..\keycloak.ApiService\keycloak.ApiService.csproj" />
     <ProjectReference Include="..\keycloak.Web\keycloak.Web.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Aspire.Hosting.AppHost" Version="8.2.0" />
+	  <PackageReference Include="Keycloak.AuthServices.Aspire.Hosting" Version="0.1.0" />
   </ItemGroup>
 
 </Project>

@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Keycloak.AuthServices.Aspire.Hosting" Version="0.1.0" />
+    <PackageReference Include="Keycloak.AuthServices.Authentication" Version="2.5.3" />
+    <PackageReference Include="Keycloak.AuthServices.Common" Version="2.5.3" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\keycloak.ServiceDefaults\keycloak.ServiceDefaults.csproj" />
   </ItemGroup>
 
