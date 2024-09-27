@@ -31,8 +31,8 @@ builder.Services.Configure<CookiePolicyOptions>(options =>
     options.MinimumSameSitePolicy = SameSiteMode.Unspecified;
 });
 
-builder
-    .Services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
+builder.Services
+    .AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
     .AddKeycloakWebApp(
         builder.Configuration.GetSection(KeycloakAuthenticationOptions.Section),
         configureOpenIdConnectOptions: options =>
