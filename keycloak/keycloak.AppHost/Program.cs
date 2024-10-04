@@ -1,10 +1,23 @@
 var builder = DistributedApplication.CreateBuilder(args);
 
+var username = builder.AddParameter("username");
+var password = builder.AddParameter("password");
+
+var dbserver = builder
+    .AddPostgres("postgres", username, password)
+    .WithEnvironment("POSTGRES_DB", "identity")
+    .WithPgAdmin();
+
+var identitydb = dbserver.AddDatabase("identity");
+        
 var keycloak = builder
     .AddKeycloakContainer("keycloak")
     .WithDockerfile("./KeycloakConfiguration", "Dockerfile")
     .WithHttpsEndpoint(port: 8443, targetPort: 8443, name: "https")
     .WithDataVolume()
+    .WithEnvironment("KC_DB_USERNAME", username)
+    .WithEnvironment("KC_DB_PASSWORD", password)
+    .WithEnvironment("KC_DB_URL", JdbcExpression.Create(identitydb))
     .WithImport("./KeycloakConfiguration/Test-realm.json");
 
 if (builder.ExecutionContext.IsRunMode)
