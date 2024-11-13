@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatasyncService", "DatasyncService\DatasyncService.csproj", "{B415FFAE-C000-4A85-8003-2189646838A0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B415FFAE-C000-4A85-8003-2189646838A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B415FFAE-C000-4A85-8003-2189646838A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B415FFAE-C000-4A85-8003-2189646838A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B415FFAE-C000-4A85-8003-2189646838A0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A4F09B92-A2A0-4317-9C7E-F544F995F3F1}
+	EndGlobalSection
+EndGlobal
