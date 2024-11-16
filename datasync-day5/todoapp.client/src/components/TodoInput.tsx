@@ -3,12 +3,12 @@ import { useTodos } from './TodoProvider.tsx';
 
 export default function TodoInput() {
   const [text, setText] = useState('');
-  const { dispatch } = useTodos();
+  const { addTodo } = useTodos();
 
-  function handleAdd() {
+  async function handleAdd() {
     const title = text.trim();
     if (title) {
-      dispatch({ type: 'add', title });
+      await addTodo(title);
       setText('');
     }
   }

@@ -4,17 +4,17 @@ import { useTodos } from './TodoProvider.tsx';
 import { useEffect, useRef, useState } from 'react';
 
 export default function TodoItem({ todo }: { todo: Todo }) {
-    const { dispatch } = useTodos();
+    const { removeTodo, editTodo } = useTodos();
     const [isEditing, setIsEditing] = useState(false);
     const [editedTitle, setEditedTitle] = useState(todo.title);
     const inputRef = useRef<HTMLInputElement>(null);
 
-    function handleEdit() {
+    async function handleEdit() {
         const title = editedTitle.trim()
         if (!title) {
-            dispatch({ type: 'remove', id: todo.id });
+            await removeTodo(todo.id);
         } else {
-            dispatch({ type: 'edit', todo: { ...todo, title } });
+            await editTodo({ ...todo, title });
         }
         setIsEditing(false);
     }
@@ -42,15 +42,12 @@ export default function TodoItem({ todo }: { todo: Todo }) {
                     type="checkbox"
                     className="toggle"
                     checked={todo.completed}
-                    onChange={(e) => {
-                        dispatch({
-                            type: 'edit',
-                            todo: { ...todo, completed: e.target.checked },
-                        })
+                    onChange={async (e) => {
+                        await editTodo({ ...todo, completed: e.target.checked });
                     }}
                 />
                 <label onDoubleClick={() => setIsEditing(true)}>{todo.title}</label>
-                <button className="destroy" onClick={() => dispatch({ type: 'remove', id: todo.id })}></button>
+                <button className="destroy" onClick={async () => await removeTodo(todo.id)}></button>
             </div>
             {isEditing && (
                 <input

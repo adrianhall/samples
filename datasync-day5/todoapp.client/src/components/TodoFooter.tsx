@@ -1,9 +1,8 @@
 import { useTodos } from './TodoProvider.tsx';
 import TodoFilters from './TodoFilters.tsx';
-import { ActionType } from '../types';
 
 export default function TodoFooter() {
-    const { todos, dispatch } = useTodos();
+    const { todos } = useTodos();
     const remaining = todos.filter((todo) => !todo.completed).length;
 
     return (
@@ -11,7 +10,7 @@ export default function TodoFooter() {
             <footer className="footer">
                 <TodoCount remaining={remaining} />
                 <TodoFilters />
-                {todos.length > remaining && <ClearButton dispatch={dispatch} />}
+                {todos.length > remaining && <ClearButton />}
             </footer>
         )
     );
@@ -26,9 +25,11 @@ function TodoCount({ remaining }: { remaining: number }) {
     );
 }
 
-function ClearButton({ dispatch }: { dispatch: React.Dispatch<ActionType> }) {
+function ClearButton() {
+    const { clearCompletedTodos } = useTodos();
+
     return (
-        <button className="clear-completed" onClick={() => dispatch({ type: 'clear' })}>
+        <button className="clear-completed" onClick={async () => await clearCompletedTodos()}>
             Clear completed
         </button>
     );
