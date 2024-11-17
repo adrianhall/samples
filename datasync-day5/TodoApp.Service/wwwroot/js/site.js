@@ -51,28 +51,28 @@
     };
 
     const createTodoItem = (title) => {
-        console.trace('createTodoItem: title = ', title);
+        console.debug('createTodoItem: title = ', title);
         const todoItem = {
             id: crypto.randomUUID(),
-            title: val,
+            title,
             completed: false
         };
-        todos.push(todoItem);
-        console.trace('createTodoItem: todoItem = ', todoItem);
+        todoItems.push(todoItem);
+        console.debug('createTodoItem: todoItem = ', todoItem);
     }
 
     const editTodoItem = (todoItem, changes) => {
-        console.trace('editTodoItem: todoItem = ', todoItem, 'changes = ', changes);
+        console.debug('editTodoItem: todoItem = ', todoItem, 'changes = ', changes);
         const todoItemToEdit = todoItems.find(item => item.id === todoItem.id);
         if (todoItem) {
             Object.assign(todoItemToEdit, changes);
-            console.trace('editTodoItem: todoItemToEdit = ', todoItemToEdit);
+            console.debug('editTodoItem: todoItemToEdit = ', todoItemToEdit);
         }
     };
 
     const removeTodoItem = (todoItem) => {
         todoItems = todoItems.filter(item => item.id !== todoItem.id);
-        console.trace('removeTodoItem: ', todoItem);
+        console.debug('removeTodoItem: ', todoItem);
     };
 
     $('#new-todo').on('keyup', (e) => {
@@ -142,7 +142,7 @@
             editTodoItem(todoItems[indexFromEl(el)], { title: val });
         }
 
-        renderTodoitems();
+        renderTodoItems();
     });
 
     $('#todo-list').on('click', '.destroy', (e) => {
