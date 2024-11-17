@@ -18,14 +18,7 @@
     const indexFromEl = (el) => {
         const id = $(el).closest('li').data('id');
         return todoItems.findIndex(item => item.id === id);
-    },
-
-    const router = new Router({
-        '/:filter': (filter) => {
-            listFilter = filter;
-            renderTodoItems();
-        }
-    }).init('/all');
+    };
 
     const getFilteredTodoItems = () => {
         if (listFilter === 'active') {
@@ -46,7 +39,7 @@
 
         $('#todo-list').html(todoTemplate(itemsToRender));
         $('#main').toggle(itemsToRender.length > 0);
-        $('#toggle-all').prop('checked', getActiveTodoItems().length === 0);
+        $('#toggle-all').prop('checked', activeCount === 0);
         $('#new-todo').trigger('focus');
 
         $('#footer').toggle(todoItems.length > 0).html(footerTemplate({
@@ -58,20 +51,22 @@
     };
 
     const createTodoItem = (title) => {
+        console.trace('createTodoItem: title = ', title);
         const todoItem = {
             id: crypto.randomUUID(),
             title: val,
             completed: false
         };
         todos.push(todoItem);
-        console.trace('createTodoItem: ', todoItem);
+        console.trace('createTodoItem: todoItem = ', todoItem);
     }
 
     const editTodoItem = (todoItem, changes) => {
-        const todoItem = todoItems.find(item => item.id === todoItem.id);
+        console.trace('editTodoItem: todoItem = ', todoItem, 'changes = ', changes);
+        const todoItemToEdit = todoItems.find(item => item.id === todoItem.id);
         if (todoItem) {
-            Object.assign(todoItem, changes);
-            console.trace('editTodoItem: ', todoItem);
+            Object.assign(todoItemToEdit, changes);
+            console.trace('editTodoItem: todoItemToEdit = ', todoItemToEdit);
         }
     };
 
@@ -154,4 +149,11 @@
         removeTodoItem(todoItems[indexFromEl(el)]);
         renderTodoItems();
     });
+
+    const router = new Router({
+        '/:filter': (filter) => {
+            listFilter = filter;
+            renderTodoItems();
+        }
+    }).init('/all');
 });
