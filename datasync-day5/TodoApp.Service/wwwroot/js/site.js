@@ -112,7 +112,13 @@
     const createTodoItem = async (title) => {
         console.debug('createTodoItem: title = ', title);
         let newItem = await DatasyncService.createTodoItem(title);
-        todoItems.push(newItem);
+        // Because real-time, let's push or replace.
+        const idx = todoItems.findIndex(item => item.id == newItem.id);
+        if (idx < 0) {
+            todoItems.push(newItem);
+        } else {
+            todoItems[idx] = newItem;
+        }
     }
 
     const editTodoItem = async (todoItem, changes) => {
@@ -201,6 +207,7 @@
     });
 
     $('#todo-list').on('click', '.destroy', async (e) => {
+        const el = e.target;
         await removeTodoItem(todoItems[indexFromEl(el)]);
         renderTodoItems();
     });
@@ -218,5 +225,43 @@
         renderTodoItems();
     }).catch(err => {
         console.error(err);
+    });
+
+    const realtimeConnection = new signalR.HubConnectionBuilder().withUrl("/servicehub").build();
+    realtimeConnection.on("ServiceChange", (evt) => {
+        console.debug("ServiceChange", evt);
+        const entity = evt.entity;
+        let madeChanges = false;
+        switch (evt.operation) {
+            case 0:
+                const addedIdx = todoItems.findIndex(item => item.id == entity.id);
+                if (addedIdx < 0) {
+                    todoItems.push(entity);
+                } else {
+                    todoItems[addedIdx] = entity;
+                }
+                madeChange = true;
+                break;
+            case 1:
+                todoItems = todoItems.filter(item => item.id !== todoItem.id);
+                madeChanges = true;
+                break;
+            case 4:
+                const modifiedIdx = todoItems.findIndex(item => item.id == entity.id);
+                if (modifiedIdx >= 0) {
+                    todoItems[modifiedIdx] = entity;
+                    madeChanges = true;
+                }
+                break;
+        }
+        if (madeChanges) {
+            renderTodoItems();
+        }
+    });
+
+    realtimeConnection.start().then(() => {
+        console.debug("realtimeConnection started");
+    }).catch(err => {
+        console.error(err.toString());
     });
 });

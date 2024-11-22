@@ -21,12 +21,16 @@
       "provider": "jsdelivr",
       "library": "handlebars@4.7.8",
       "destination": "wwwroot/lib/handlebars/"
+    },
+    {
+      "provider": "jsdelivr",
+      "library": "director@1.2.8",
+      "destination": "wwwroot/lib/director/"
+    },
+    {
+      "provider": "jsdelivr",
+      "library": "@microsoft/signalr@6.0.6",
+      "destination": "wwwroot/lib/microsoft/signalr/"
     }
-  ,
-{
-  "provider": "jsdelivr",
-  "library": "director@1.2.8",
-  "destination": "wwwroot/lib/director/"
-}
-]
+  ]
 }

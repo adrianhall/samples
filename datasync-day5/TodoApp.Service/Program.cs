@@ -1,5 +1,6 @@
 using CommunityToolkit.Datasync.Server;
 using Microsoft.EntityFrameworkCore;
+using TodoApp.Service.Controllers;
 using TodoApp.Service.Database;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +21,7 @@ builder.Services.AddDbContext<TodoContext>(options =>
 
 builder.Services.AddDatasyncServices();
 builder.Services.AddControllersWithViews();
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
@@ -35,5 +37,6 @@ app.UseAuthorization();
 app.UseRouting();
 app.MapControllers();
 app.MapDefaultControllerRoute();
+app.MapHub<ServiceHub>("/servicehub");
 
 app.Run();
