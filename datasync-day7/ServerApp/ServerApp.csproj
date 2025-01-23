@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>5c8ad1fa-e5f1-4d1e-bfb6-d12cc6bbc5e9</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Datasync.Server" Version="8.0.5" />
+    <PackageReference Include="CommunityToolkit.Datasync.Server.InMemory" Version="8.0.5" />
+    <PackageReference Include="Microsoft.Identity.Web" Version="3.6.2" />
+  </ItemGroup>
+
+</Project>
