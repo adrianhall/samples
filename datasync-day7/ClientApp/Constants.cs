@@ -10,10 +10,10 @@ internal static class Constants
     /// <summary>
     /// The application (client) ID for the native app within Microsoft Entra ID
     /// </summary>
-    public static string ApplicationId = "d29fecae-8fc2-4fc0-96ed-99a5191f2cfb";
+    public static string ApplicationId = "<your-client-application-id>";
 
     /// <summary>
     /// The list of scopes to request
     /// </summary>
-    public static string[] Scopes = ["api://d4264e8a-722b-4a7e-855c-9b5f136dda62/access_as_user"];
+    public static string[] Scopes = ["api://<your-server-application-id>/access_as_user"];
 }
